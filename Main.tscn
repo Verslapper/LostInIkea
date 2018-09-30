@@ -1,9 +1,12 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://Main.gd" type="Script" id=1]
 [ext_resource path="res://TileMap.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Player.tscn" type="PackedScene" id=3]
-[ext_resource path="res://Portal.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Player.gd" type="Script" id=4]
+[ext_resource path="res://HUD.tscn" type="PackedScene" id=5]
+[ext_resource path="res://Portal.tscn" type="PackedScene" id=6]
+[ext_resource path="res://Portal.gd" type="Script" id=7]
 
 [node name="Main" type="Node" index="0"]
 
@@ -13,15 +16,12 @@ script = ExtResource( 1 )
 
 [node name="Player" parent="." index="1" instance=ExtResource( 3 )]
 
-position = Vector2( 496, 476 )
+position = Vector2( 492.676, 472.676 )
+z_index = 1
+script = ExtResource( 4 )
+_sections_unfolded = [ "Z Index" ]
 
-[node name="HUD" type="CanvasLayer" parent="." index="2"]
-
-layer = 1
-offset = Vector2( 0, 0 )
-rotation = 0.0
-scale = Vector2( 1, 1 )
-transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+[node name="HUD" parent="." index="2" instance=ExtResource( 5 )]
 
 [node name="LabelLeft" type="Label" parent="." index="3"]
 
@@ -73,12 +73,18 @@ lines_skipped = 0
 max_lines_visible = -1
 _sections_unfolded = [ "custom_colors" ]
 
-[node name="Portal" parent="." index="5" instance=ExtResource( 4 )]
+[node name="Portal" parent="." index="5" instance=ExtResource( 6 )]
 
 position = Vector2( 74, 476 )
+script = ExtResource( 7 )
+_sections_unfolded = [ "Z Index" ]
 
-[node name="Portal2" parent="." index="6" instance=ExtResource( 4 )]
+[node name="Portal2" parent="." index="6" instance=ExtResource( 6 )]
 
 position = Vector2( 934, 470 )
+
+[connection signal="body_entered" from="Portal" to="." method="_on_Portal_body_entered"]
+
+[connection signal="body_entered" from="Portal2" to="." method="_on_Portal2_body_entered"]
 
 

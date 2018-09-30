@@ -5,14 +5,15 @@ var portals = ["Fluegnoogit", "Hurdygurdy", "Danderblut", "Kjellkorp", "Wamm"]
 # Max movements before exit, something like that
 var levelDepth = 2
 var levels = []
+var meatballs = 0
+var currentLevel
 
 func _ready():
 	# Called when the node is added to the scene for the first time.
 	# Initialization here
 	
-	# Set up physics shit
-	
 	# Set up timer
+	# Set up meatball counter
 	
 	# Initialise levels/layout
 	randomize()
@@ -24,20 +25,44 @@ func _ready():
 		
 	levels.append("Exit")
 	
-	# pick a level
-	rand = randi()%levels.size()
-	var currentLevel = levels[rand]
-	# if currentLevel is exit yay!
-	
-	rand = randi()%levels.size()
-	$LabelLeft.set_text(levels[rand])
-	
-	rand = randi()%levels.size()
-	$LabelRight.set_text(levels[rand])
-	
-	pass
+	currentLevel = randi()%levels.size()
+	nextLevel(0)
 
-#func _process(delta):
-#	# Called every frame. Delta is time since last frame.
-#	# Update game logic here.
-#	pass
+func portalEntered(direction):
+	if ((direction == -1 && $LabelLeft.get_text() == "Exit") ||
+		(direction == 1 && $LabelRight.get_text() == "Exit") ):
+		win()
+	else:
+		nextLevel(direction)
+
+func nextLevel(direction):
+	currentLevel = currentLevel + direction
+	if (currentLevel + 1 == levels.size()):
+		currentLevel = currentLevel - 1
+		
+	# Could you do a star wipe here?
+	
+	$LabelLeft.set_text(levels[currentLevel])
+	$LabelRight.set_text(levels[currentLevel+1])
+	
+	var freshMeat = preload("res://Meatball.tscn").instance()
+	#use this if it needs parameters
+	#mySprite.init(a, b)
+	var randx = randi()%int(get_viewport().size.x)
+	var randy = randi()%int(get_viewport().size.y)
+	freshMeat.position = Vector2(randx,randy)
+	add_child(freshMeat)
+	
+func win():
+	var message = "You escaped! Bravo!"
+	if (meatballs > 0):
+		message += " Meatballs: " + str(meatballs)
+	$HUD/Label.set_text(message)
+
+func _on_Portal_body_entered(body):
+	if (body.name == "Player"):
+		portalEntered(-1)
+
+func _on_Portal2_body_entered(body):
+	if (body.name == "Player"):
+		portalEntered(1)
