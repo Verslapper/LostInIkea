@@ -1,17 +1,14 @@
 extends Node
 
 # Initialise list of items for sale
-var portals = ["Fluegnoogit", "Hurdygurdy", "Danderblut", "Kjellkorp", "Wamm"]
+var portals = ["Fluegnoogit", "Hurdygurdy", "Danderbloot", "Kjellkorp", "Wamm", "Ferndrel"]
 # Max movements before exit, something like that
 var levelDepth = 2
 var levels = []
 var meatballs = 0
 var currentLevel
 
-func _ready():
-	# Called when the node is added to the scene for the first time.
-	# Initialization here
-	
+func _ready(): 
 	# Set up timer
 	# Set up meatball counter
 	
@@ -51,6 +48,7 @@ func nextLevel(direction):
 	var randx = randi()%int(get_viewport().size.x)
 	var randy = randi()%int(get_viewport().size.y)
 	freshMeat.position = Vector2(randx,randy)
+	# How do I add collision detection and hiding on generated instances?
 	add_child(freshMeat)
 	
 func win():
@@ -66,3 +64,8 @@ func _on_Portal_body_entered(body):
 func _on_Portal2_body_entered(body):
 	if (body.name == "Player"):
 		portalEntered(1)
+
+func _on_Meatball_body_entered(body):
+	$Meatball/CollisionShape2D.disabled = true
+	$Meatball.hide()
+	meatballs += 1

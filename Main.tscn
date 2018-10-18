@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://Main.gd" type="Script" id=1]
 [ext_resource path="res://TileMap.tscn" type="PackedScene" id=2]
@@ -7,6 +7,7 @@
 [ext_resource path="res://HUD.tscn" type="PackedScene" id=5]
 [ext_resource path="res://Portal.tscn" type="PackedScene" id=6]
 [ext_resource path="res://Portal.gd" type="Script" id=7]
+[ext_resource path="res://Meatball.tscn" type="PackedScene" id=8]
 
 [node name="Main" type="Node" index="0"]
 
@@ -83,8 +84,14 @@ _sections_unfolded = [ "Z Index" ]
 
 position = Vector2( 934, 470 )
 
+[node name="Meatball" parent="." index="7" instance=ExtResource( 8 )]
+
+position = Vector2( 254.39, 470.689 )
+
 [connection signal="body_entered" from="Portal" to="." method="_on_Portal_body_entered"]
 
 [connection signal="body_entered" from="Portal2" to="." method="_on_Portal2_body_entered"]
+
+[connection signal="body_entered" from="Meatball" to="." method="_on_Meatball_body_entered"]
 
 
