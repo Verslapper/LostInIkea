@@ -1,8 +1,8 @@
 extends KinematicBody2D
 
-const GRAVITY = 200.0
-const WALK_SPEED = 200
-const JUMP_SPEED = 100
+const GRAVITY = 420.0
+const WALK_SPEED = 420
+const JUMP_SPEED = 200
 
 var velocity = Vector2()
 

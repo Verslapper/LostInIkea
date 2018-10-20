@@ -1,7 +1,7 @@
 extends Node
 
 # Initialise list of items for sale
-var portals = ["Fluegnoogit", "Hurdygurdy", "Danderbloot", "Kjellkorp", "Wamm", "Ferndrel"]
+var portals = ["Fluegnoogit", "Hurdygurdy", "Danderbloot", "Kjellkorp", "Wamm", "Ferndrel", "Hoobastank"]
 # Max movements before exit, something like that
 var levelDepth = 2
 var levels = []
@@ -9,10 +9,6 @@ var meatballs = 0
 var currentLevel
 
 func _ready(): 
-	# Set up timer
-	# Set up meatball counter
-	
-	# Initialise levels/layout
 	randomize()
 	
 	var rand = randi()%portals.size()
@@ -43,13 +39,13 @@ func nextLevel(direction):
 	$LabelRight.set_text(levels[currentLevel+1])
 	
 	var freshMeat = preload("res://Meatball.tscn").instance()
-	#use this if it needs parameters
-	#mySprite.init(a, b)
 	var randx = randi()%int(get_viewport().size.x)
 	var randy = randi()%int(get_viewport().size.y)
 	freshMeat.position = Vector2(randx,randy)
+	
 	# How do I add collision detection and hiding on generated instances?
 	add_child(freshMeat)
+	freshMeat.connect("hit", self, "_on_Meatball_hit")
 	
 func win():
 	var message = "You escaped! Bravo!"
@@ -65,7 +61,7 @@ func _on_Portal2_body_entered(body):
 	if (body.name == "Player"):
 		portalEntered(1)
 
-func _on_Meatball_body_entered(body):
-	$Meatball/CollisionShape2D.disabled = true
-	$Meatball.hide()
+func _on_Meatball_hit():
+	#this.hide()
 	meatballs += 1
+	print(meatballs)
