@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/lostinikea.ogg-be91c96d1675babf784b396fc34b110a.oggstr"
+
+[deps]
+
+source_file="res://assets/lostinikea.ogg"
+dest_files=[ "res://.import/lostinikea.ogg-be91c96d1675babf784b396fc34b110a.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0
